@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "ms-python.vscode-pylance",
+        "visualstudioexptteam.vscodeintellicode",
+        "connorshea.vscode-test-explorer-status-bar",
+        "ms-azuretools.vscode-docker",
+        "hbenl.vscode-test-explorer",
+        "usernamehw.errorlens",
+        "kevinrose.vsc-python-indent",
+        "s3gf4ult.monokai-vibrant"
+    ]
+}

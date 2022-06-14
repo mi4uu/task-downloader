@@ -1,0 +1,28 @@
+{
+    "include": [
+      "backend",
+      "tests"
+    ],
+  
+    "ignore": [
+      "docs",
+      "python-packages",
+    ],
+    
+    "reportMissingImports": true,
+    "reportMissingTypeStubs": false,
+    "reportUnknownMemberType": true,
+  
+    "pythonVersion": "3.10",
+    "pythonPlatform": "Linux",
+  
+    "executionEnvironments": [
+    
+      {
+        "root": "backend"
+      },
+      {
+        "root": "tests"
+      }
+    ]
+}

@@ -1,0 +1,104 @@
+version: "3.9"
+
+services:
+
+  # Main backend application
+  backend:
+    container_name: downloader-api
+    build: ./backend
+    image: downloader-api
+    ports:
+      - "8080:8080"
+      - "5678:5678"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_CELERY_DB_INDEX=10
+      - REDIS_STORE_DB_INDEX=0
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_PORT=5672
+    volumes:
+      - ./backend/backend:/code/backend:cached
+      - ./storage:/storage
+      - ./backend/tests:/code/tests:cached
+
+    depends_on:
+      - database
+      - rabbitmq
+      - worker
+    restart: "no"
+    command: ["sh", "-c", "poetry run python -m debugpy  --listen 0.0.0.0:5678 -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8080"]
+
+
+
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:latest
+    volumes:
+        - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
+    ports:
+        - "5672:5672"
+
+
+
+  worker:
+    image: downloader-api
+    environment:
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - REDIS_CELERY_DB_INDEX=10
+        - REDIS_STORE_DB_INDEX=0
+        - RABBITMQ_HOST=rabbitmq
+        - RABBITMQ_USERNAME=guest
+        - RABBITMQ_PASSWORD=guest
+        - RABBITMQ_PORT=5672
+    depends_on:
+        - rabbitmq
+        - redis
+    volumes:
+      - ./backend/backend:/code/backend:cached
+      - ./storage:/storage
+    restart: "no"
+    command: ["sh", "-c", "poetry run celery -A backend.celery.tasks worker  --loglevel=INFO"]
+
+
+
+
+
+
+
+  redis:
+    hostname: redis
+    image: redis:latest
+    ports:
+        - "6379:6379"
+    environment:
+      - REDIS_AOF_ENABLED=yes
+
+
+
+
+
+  flower:
+    image: downloader-api
+    environment:
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - REDIS_CELERY_DB_INDEX=10
+        - REDIS_STORE_DB_INDEX=0
+        - RABBITMQ_HOST=rabbitmq
+        - RABBITMQ_USERNAME=guest
+        - RABBITMQ_PASSWORD=guest
+        - RABBITMQ_PORT=5672
+    ports:
+        - 5555:5555
+    depends_on:
+        - rabbitmq
+        - redis
+    volumes:
+      - ./backend/backend:/code/backend:cached
+      - ./storage:/storage
+    restart: "no"
+    command: ["sh", "-c", "poetry run celery --broker=amqp://guest:guest@rabbitmq:5672// -A backend.celery.tasks flower"]

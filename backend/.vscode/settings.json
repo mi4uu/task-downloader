@@ -1,0 +1,32 @@
+{
+    "python.formatting.provider": "black",
+    "[python]": {
+        "editor.formatOnSave": true
+    },
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.testing.pytestArgs": ["--ignore=data"],
+    "python.testing.pytestEnabled": true,
+    "python.analysis.typeCheckingMode":"strict",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.completeFunctionParens":true,
+    "testExplorer.codeLens":true,
+    "testExplorer.gutterDecoration":true,
+    "errorlens.enabled":true,
+    "errorLens.toggle":true,
+    "python.testing.codeLensesEnabled":false,
+    
+    "python.analysis.useLibraryCodeForTypes": true,
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+    "python.linting.enabled": true,
+    "python.defaultInterpreterPath": "./.venv/bin/python",
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "workbench.iconTheme": "vscode-great-icons",
+    "workbench.colorTheme": "Monokai Vibrant",
+    "editor.fontFamily": "Gintronic, Operator Mono, Consolas, 'Courier New', monospace",
+    "editor.ligatures": true,
+ 
+}

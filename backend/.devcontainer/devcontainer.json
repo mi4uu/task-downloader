@@ -1,0 +1,50 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/containers/docker-existing-dockerfile
+{
+	"name": "run backend in devcontainer",
+
+	"dockerComposeFile": "../../docker-compose.yml",
+
+	"service": "backend",
+ 	"workspaceFolder": "/code",
+  	"shutdownAction": "stopCompose",
+	  "settings": { 
+		"sqltools.connections": [{
+			"name": "Container DEV database",
+			"driver": "PostgreSQL",
+			"previewLimit": 50,
+			"server": "database",
+			"port": 5432,
+			"database": "db",
+			"username": "user",
+			"password": "password"
+		},
+		{
+			"name": "Container TEST database",
+			"driver": "PostgreSQL",
+			"previewLimit": 50,
+			"server": "database",
+			"port": 5432,
+			"database": "test",
+			"username": "user",
+			"password": "password"
+		}],
+		"python.pythonPath": "./.venv/bin/python",
+		"python.languageServer": "Pylance",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": false
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"mtxr.sqltools",
+		"mtxr.sqltools-driver-pg",
+		"hbenl.vscode-test-explorer",
+		"usernamehw.errorlens",
+		"s3gf4ult.monokai-vibrant"
+
+
+	]
+}
