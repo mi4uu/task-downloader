@@ -1,10 +1,14 @@
 I decided to use fast api for the api with celery as a standard approach for distributed tasks.
 celery is configured to use rabbitMQ as a message broker and redis as a result store.
 
-job is split into multiple celery tasks.
+job is split into multiple celery tasks. each file is downloaded simultaneously and then archived.
+
 celery tasks are queued and linked after the creation of the task in db.
+
 celery tasks are independent from api server.
+
 I did implement callback_url
+
 i did not implement restarting of tasks in case of network errors, but it should be easy to do using celery build-in mechanisms.
 
 
