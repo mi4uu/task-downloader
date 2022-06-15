@@ -14,7 +14,7 @@ app = FastAPI()
 settings = get_settings()
 
 app.include_router(main_router)
-app.include_router(task_router, prefix="/api/v1/task")
+app.include_router(task_router, prefix="/api/archive")
 
 app.mount(
     settings.shared_storage_url,

@@ -61,7 +61,12 @@ def complete(self, task_id: str):
 def download_file(task_id: str, url: str):
     response = requests.get(url, stream=True)
 
-    basename = os.path.basename((url)) or url.split("/")[-1] or url.split("/")[-2] or str(uuid.uuid4())
+    basename = (
+        os.path.basename((url))
+        or url.split("/")[-1]
+        or url.split("/")[-2]
+        or str(uuid.uuid4())
+    )
 
     directory = os.path.join(os.path.join(settings.shared_storage_url, task_id))
     filename = os.path.join(directory, basename)

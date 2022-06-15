@@ -14,16 +14,29 @@ class Stages(str, Enum):
 
 
 class TaskIn(BaseModel):
-    files: List[str]
+    urls: List[str]
     callback_url: Optional[str]
 
 
+class TaskOnlyHash(BaseModel):
+    archive_hash: uuid.UUID
+
+
+class TaskOnlyStatus(BaseModel):
+    status: Stages
+
+
+class TaskCompleted(BaseModel):
+    status: Stages
+    url: str
+
+
 class Task(TaskIn):
-    id: uuid.UUID
+    archive_hash: uuid.UUID
     created_at: datetime
     modified_at: datetime
     status: Stages = Stages.NEW
-    download_url: Optional[str]
+    url: Optional[str]
 
     class Config:
         orm_mode = True

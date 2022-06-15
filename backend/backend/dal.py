@@ -8,7 +8,10 @@ def create_task(db: Redis, task: schemas.TaskIn) -> schemas.Task:  # type: ignor
 
     task_id = uuid.uuid4()
     new_task = schemas.Task(
-        id=task_id, created_at=datetime.now(), modified_at=datetime.now(), **task.dict()
+        archive_hash=task_id,
+        created_at=datetime.now(),
+        modified_at=datetime.now(),
+        **task.dict(),
     )
 
     result = db.set(str(task_id), new_task.json())  # type: ignore
@@ -36,7 +39,7 @@ def complete_task(db: Redis, task_id: str) -> schemas.Task:  # type: ignore
     task_data = db.get(task_id)  # type: ignore
 
     task: schemas.Task = schemas.Task.parse_raw(task_data)  # type: ignore
-    task.download_url = f"http://localhost:8080/storage/{task_id}.zip"
+    task.url = f"http://localhost:8080/storage/{task_id}.zip"
     task.status = schemas.Stages.COMPLETED
     task.modified_at = datetime.now()
 
