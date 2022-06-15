@@ -38,8 +38,5 @@ class AppSettings(BaseSettings):
         )
 
 
-
-
-
 def get_settings() -> AppSettings:
     return AppSettings()

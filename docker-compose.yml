@@ -61,7 +61,7 @@ services:
       - ./backend/backend:/code/backend:cached
       - ./storage:/storage
     restart: "no"
-    command: ["sh", "-c", "poetry run celery -A backend.celery.tasks worker  --loglevel=INFO"]
+    command: ["sh", "-c", "poetry run celery -A backend.celery.tasks worker  --loglevel=INFO "]
 
 
 
@@ -76,6 +76,14 @@ services:
         - "6379:6379"
     environment:
       - REDIS_AOF_ENABLED=yes
+
+  echoserver:
+    hostname: echoserver
+    image: mendhak/http-https-echo
+    ports:
+        - "9080:80"
+        - "9443:443"
+
 
 
 

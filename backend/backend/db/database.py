@@ -1,8 +1,7 @@
-import aioredis
 from backend.config import get_settings
-from aioredis.client import Redis
+from redis import Redis
 
 
-async def get_db() -> Redis:
+def get_db() -> Redis:  # type: ignore
     settings = get_settings()
-    return await aioredis.from_url(settings.redis_store_uri)  # type: ignore
+    return Redis.from_url(settings.redis_store_uri)  # type: ignore
