@@ -1,10 +1,3 @@
 
 version: "3.9"
 
-services:
-  backend:
-    volumes:
-        - ${PWD}/backend/tests/:/code/tests:cached
-    # command: ["sh", "-c", "poetry run python -m debugpy  --listen 0.0.0.0:5678 -m pytest "]
-    # for debugging
-    # command: ["sh", "-c", "poetry run python -m debugpy  --listen 0.0.0.0:5678 --wait-for-client -m pytest "]

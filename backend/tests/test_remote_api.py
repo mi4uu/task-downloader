@@ -28,7 +28,7 @@ async def test_new_file_from_api(client: AsyncClient):
     response = await client.get(f"/api/archive/status/{id}")
     assert response.json()["status"] in [schemas.Stages.NEW, schemas.Stages.RUNNING]
     
-    await asyncio.sleep(2)
+    await asyncio.sleep(15)
     response = await client.get(f"/api/archive/status/{id}")
     
     assert response.json()["status"] in [schemas.Stages.COMPLETED]
